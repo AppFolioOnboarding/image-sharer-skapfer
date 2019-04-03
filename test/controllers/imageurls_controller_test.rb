@@ -1,5 +1,7 @@
 require 'test_helper'
 
+# FIXME check correct view is rendered in each case
+
 class ImageurlsControllerTest < ActionDispatch::IntegrationTest
   test 'should respond to /imageurls/new' do
     get '/imageurls/new'
@@ -7,6 +9,8 @@ class ImageurlsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'creating a new URL works' do
+    # FIXME split up this test
+    # FIXME check correct flash message is shown
     assert_difference('Imageurl.count') do
       post '/imageurls', params: { imageurl: { url: 'http://host.com/image.jpg' } }
       assert_redirected_to Imageurl.last
@@ -24,6 +28,7 @@ class ImageurlsControllerTest < ActionDispatch::IntegrationTest
 
   test 'creating an invalid URL fails' do
     post '/imageurls', params: { imageurl: { url: 'foobar' } }
+    # FIXME check correct flash message is shown
     assert_response :unprocessable_entity
   end
 end
