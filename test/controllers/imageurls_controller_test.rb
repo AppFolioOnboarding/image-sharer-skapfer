@@ -17,7 +17,8 @@ class ImageurlsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'showing invalid id fails' do
-    get format('/imageurls/%<id>i', id: [Imageurl.last.id + 1])
+    post '/imageurls', params: { imageurl: { url: 'http://host.com/image.jpg' } }
+    get format('/imageurls/%<id>i', id: Imageurl.last.id + 1)
     assert_response :not_found
   end
 
