@@ -8,7 +8,7 @@ class ImageurlsControllerTest < ActionDispatch::IntegrationTest
 
   test 'creating a new URL works' do
     assert_difference('Imageurl.count') do
-      post '/imageurls', params: { imageurl: { url: 'http://host.com/image.jpg' }}
+      post '/imageurls', params: { imageurl: { url: 'http://host.com/image.jpg' } }
       assert_redirected_to Imageurl.last
       # check new record can be shown
       get imageurl_path(Imageurl.first)
@@ -17,12 +17,12 @@ class ImageurlsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'showing invalid id fails' do
-    get '/imageurls/%i' % [Imageurl.last.id + 1]
+    get format('/imageurls/%<id>i', id: [Imageurl.last.id + 1])
     assert_response :not_found
   end
 
   test 'creating an invalid URL fails' do
-    post '/imageurls', params: { imageurl: { url: 'foobar' }}
+    post '/imageurls', params: { imageurl: { url: 'foobar' } }
     assert_response :unprocessable_entity
   end
 end

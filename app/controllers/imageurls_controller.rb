@@ -1,10 +1,8 @@
 class ImageurlsController < ApplicationController
   def show
-    begin
-      @imageurl = Imageurl.find(params[:id])
-    rescue
-      head 404
-    end
+    @imageurl = Imageurl.find(params[:id])
+  rescue ActiveRecord::RecordNotFound
+    head 404
   end
 
   def new; end
