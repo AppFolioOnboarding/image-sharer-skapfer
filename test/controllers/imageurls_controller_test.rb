@@ -9,15 +9,18 @@ class ImageurlsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'creating a new URL works' do
-    # FIXME split up this test
     # FIXME check correct flash message is shown
     assert_difference('Imageurl.count') do
       post '/imageurls', params: { imageurl: { url: 'http://host.com/image.jpg' } }
       assert_redirected_to Imageurl.last
-      # check new record can be shown
-      get imageurl_path(Imageurl.first)
-      assert_response :success
     end
+  end
+
+  test 'showing valid id succeeds' do
+    url = Imageurl.new(url: 'http://host.com/image.jpg')
+    assert url.save
+    get imageurl_url(url)
+    assert_response :success
   end
 
   test 'showing invalid id fails' do
