@@ -8,10 +8,10 @@ class ImageurlsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'creating a new URL works' do
-    # FIXME check correct flash message is shown
     assert_difference('Imageurl.count') do
       post '/imageurls', params: { imageurl: { url: 'http://host.com/image.jpg' } }
       assert_redirected_to Imageurl.last
+      assert_equal flash[:success], 'Image URL added successfully!'
       assert_template nil
     end
   end
@@ -33,8 +33,8 @@ class ImageurlsControllerTest < ActionDispatch::IntegrationTest
 
   test 'creating an invalid URL fails' do
     post '/imageurls', params: { imageurl: { url: 'foobar' } }
-    # FIXME check correct flash message is shown
     assert_response :unprocessable_entity
+    assert_equal flash[:warning], 'Url must begin with http:// or https://'
     assert_template 'new'
   end
 end
