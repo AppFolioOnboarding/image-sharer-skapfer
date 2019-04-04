@@ -33,7 +33,7 @@ class ImageurlsControllerTest < ActionDispatch::IntegrationTest
   test 'creating an invalid URL fails' do
     post '/imageurls', params: { imageurl: { url: 'foobar' } }
     assert_response :unprocessable_entity
-    assert_equal 'Url must begin with http:// or https://', flash[:warning]
+    assert_equal 'Url must begin with http:// or https://', flash[:danger]
     assert_template 'new'
   end
 end

@@ -13,7 +13,7 @@ class ImageurlsController < ApplicationController
       flash[:success] = 'Image URL added successfully!'
       redirect_to @imageurl
     else
-      flash[:warning] = @imageurl.errors.full_messages.join(' ')
+      flash[:danger] = @imageurl.errors.full_messages.join(' ')
       render 'new', status: :unprocessable_entity
     end
   end
