@@ -10,10 +10,10 @@ class ImageurlsControllerTest < ActionDispatch::IntegrationTest
   test 'creating a new URL works' do
     assert_difference('Imageurl.count') do
       post '/imageurls', params: { imageurl: { url: 'http://host.com/image.jpg' } }
-      assert_redirected_to Imageurl.last
-      assert_equal flash[:success], 'Image URL added successfully!'
-      assert_template nil
     end
+    assert_redirected_to Imageurl.last
+    assert_equal flash[:success], 'Image URL added successfully!'
+    assert_template nil
   end
 
   test 'showing valid id succeeds' do
