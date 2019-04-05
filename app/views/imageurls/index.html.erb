@@ -6,8 +6,6 @@
 
 <% Imageurl.order(created_at: :desc).each do |imageurl| %>
 
-    <a href="<%= imageurl_url(imageurl) %>">
-      <img class="thumbnail" src="<%= imageurl.url %>" />
-    </a>
+    <%= link_to image_tag(imageurl.url, class: 'thumbnail'), imageurl_url(imageurl) %>
 
 <% end %>
