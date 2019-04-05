@@ -1,4 +1,10 @@
 class ImageurlsController < ApplicationController
+  def initialize
+    ActiveSupport::Inflector.inflections do |inflect|
+      inflect.irregular 'is', 'are'
+    end
+  end
+
   def show
     @imageurl = Imageurl.find(params[:id])
   rescue ActiveRecord::RecordNotFound
@@ -16,5 +22,10 @@ class ImageurlsController < ApplicationController
       flash[:danger] = @imageurl.errors.full_messages.join(' ')
       render 'new', status: :unprocessable_entity
     end
+  end
+
+  def index
+    @number_of_urls = Imageurl.count
+    @sorted_urls = Imageurl.order(created_at: :desc).limit(100)
   end
 end
