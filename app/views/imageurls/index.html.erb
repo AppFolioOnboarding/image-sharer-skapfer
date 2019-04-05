@@ -1,0 +1,13 @@
+<h1>Image URL database</h1>
+
+<%= link_to 'Add a new image URL', new_imageurl_path %>
+
+<h2>Existing image URLs</h2>
+
+<% Imageurl.order(created_at: :desc).each do |imageurl| %>
+
+    <a href="<%= imageurl_url(imageurl) %>">
+      <img class="thumbnail" src="<%= imageurl.url %>" />
+    </a>
+
+<% end %>

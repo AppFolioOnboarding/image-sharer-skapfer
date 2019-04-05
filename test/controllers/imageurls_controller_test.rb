@@ -36,4 +36,12 @@ class ImageurlsControllerTest < ActionDispatch::IntegrationTest
     assert_equal 'Url must begin with http:// or https://', flash[:danger]
     assert_template 'new'
   end
+
+  test 'showing index succeeds' do
+    # make sure there's something in the DB to index
+    Imageurl.create!(url: 'http://host.com/image.jpg')
+    get '/imageurls/'
+    assert_response :success
+    assert_template 'index'
+  end
 end
