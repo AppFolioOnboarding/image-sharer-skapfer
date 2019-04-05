@@ -17,4 +17,8 @@ class ImageurlsController < ApplicationController
       render 'new', status: :unprocessable_entity
     end
   end
+
+  def index
+    @sorted_urls = Imageurl.order(created_at: :desc)
+  end
 end

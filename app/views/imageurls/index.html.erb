@@ -4,7 +4,15 @@
 
 <h2>Existing image URLs</h2>
 
-<% Imageurl.order(created_at: :desc).each do |imageurl| %>
+<p>
+  <% if @sorted_urls.length != 1 %>
+    There are <%= @sorted_urls.length %> images in the database.
+  <% else %>
+    There is one image in the database.
+  <% end %>
+</p>
+
+<% @sorted_urls.each do |imageurl| %>
 
     <%= link_to image_tag(imageurl.url, class: 'thumbnail'), imageurl_url(imageurl) %>
 
