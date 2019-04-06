@@ -7,11 +7,14 @@ class ImageurlsController < ApplicationController
 
   def show
     @imageurl = Imageurl.find(params[:id])
+    render layout: 'application'
   rescue ActiveRecord::RecordNotFound
     head 404
   end
 
-  def new; end
+  def new
+    render layout: 'application'
+  end
 
   def create
     @imageurl = Imageurl.new(params.require(:imageurl).permit(:url))
@@ -20,12 +23,13 @@ class ImageurlsController < ApplicationController
       redirect_to @imageurl
     else
       flash[:danger] = @imageurl.errors.full_messages.join(' ')
-      render 'new', status: :unprocessable_entity
+      render 'new', status: :unprocessable_entity, layout: 'application'
     end
   end
 
   def index
     @number_of_urls = Imageurl.count
     @sorted_urls = Imageurl.order(created_at: :desc).limit(100)
+    render layout: 'application'
   end
 end
