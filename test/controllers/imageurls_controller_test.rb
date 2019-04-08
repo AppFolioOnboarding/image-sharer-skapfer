@@ -1,6 +1,8 @@
 require 'test_helper'
 
 class ImageurlsControllerTest < ActionDispatch::IntegrationTest
+  valid_url = 'http://host.com/image.jpg'
+
   test 'should respond to /imageurls/new' do
     get '/imageurls/new'
     assert_response :success
@@ -11,6 +13,13 @@ class ImageurlsControllerTest < ActionDispatch::IntegrationTest
     assert_difference('Imageurl.count') do
       post '/imageurls', params: { imageurl: { url: 'http://host.com/image.jpg' } }
     end
+    assert_redirected_to Imageurl.last
+    assert_equal 'Image URL added successfully!', flash[:success]
+    assert_template nil
+  end
+
+  test 'creating a URL with valid tag succeeds' do
+    post '/imageurls', params: { imageurl: { url: valid_url, tag_list: 'foobar' } }
     assert_redirected_to Imageurl.last
     assert_equal 'Image URL added successfully!', flash[:success]
     assert_template nil
@@ -34,6 +43,13 @@ class ImageurlsControllerTest < ActionDispatch::IntegrationTest
     post '/imageurls', params: { imageurl: { url: 'foobar' } }
     assert_response :unprocessable_entity
     assert_equal 'Url must begin with http:// or https://', flash[:danger]
+    assert_template 'new'
+  end
+
+  test 'creating a URL with invalid tag fails' do
+    post '/imageurls', params: { imageurl: { url: valid_url, tag_list: 'foo bar' } }
+    assert_response :unprocessable_entity
+    assert_equal 'Tag list tags must be lowercase ASCII strings and cannot contain spaces', flash[:danger]
     assert_template 'new'
   end
 
