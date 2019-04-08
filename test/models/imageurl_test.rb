@@ -25,4 +25,22 @@ class ImageurlTest < ActiveSupport::TestCase
     assert_not url.valid?
     assert_includes url.errors[:url], 'can\'t be blank'
   end
+
+  valid_url = 'https://host.com/aloha.png'
+
+  test 'image URL with valid tag list is valid' do
+    url = Imageurl.new(url: valid_url, tag_list: 'funny, picture')
+    assert url.valid?
+    assert_equal 2, url.tag_list.length
+  end
+
+  test 'tags with spaces in them are invalid' do
+    url = Imageurl.new(url: valid_url, tag_list: 'funny picture')
+    assert_not url.valid?
+  end
+
+  test 'tags with uppercase in them are invalid' do
+    url = Imageurl.new(url: valid_url, tag_list: 'Funny')
+    assert_not url.valid?
+  end
 end
