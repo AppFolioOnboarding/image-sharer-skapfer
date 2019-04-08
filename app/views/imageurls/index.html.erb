@@ -1,0 +1,16 @@
+<h1>Image URL database</h1>
+
+<%= link_to 'Add a new image URL', new_imageurl_path %>
+
+<h2>Existing image URLs</h2>
+
+<p>
+  There <%= 'is'.pluralize(@number_of_urls) %>
+  <%= pluralize(@number_of_urls, 'image') %> in the database.
+</p>
+
+<% @sorted_urls.each do |imageurl| %>
+
+    <%= link_to image_tag(imageurl.url, class: 'thumbnail'), imageurl_url(imageurl) %>
+
+<% end %>

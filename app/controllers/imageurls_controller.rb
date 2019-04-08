@@ -17,4 +17,9 @@ class ImageurlsController < ApplicationController
       render 'new', status: :unprocessable_entity
     end
   end
+
+  def index
+    @number_of_urls = Imageurl.count
+    @sorted_urls = Imageurl.order(created_at: :desc).limit(100)
+  end
 end
