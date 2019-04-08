@@ -33,5 +33,7 @@ cat_pictures = [
   'https://upload.wikimedia.org/wikipedia/commons/7/70/Gatos_cats_7_cropped.jpg'
 ]
 
-cat_picture_urls = cat_pictures.map { |x| { url: x } }
+cat_picture_urls = cat_pictures.map { |x| { url: x, tag_list: 'cat' } }
 Imageurl.create! cat_picture_urls
+
+Imageurl.create!(url: 'https://weblog.rubyonrails.org/images/rails-logo.svg', tag_list: 'logo')
