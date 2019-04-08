@@ -11,7 +11,7 @@ class ImageurlsControllerTest < ActionDispatch::IntegrationTest
 
   test 'creating a new URL works' do
     assert_difference('Imageurl.count') do
-      post '/imageurls', params: { imageurl: { url: 'http://host.com/image.jpg' } }
+      post '/imageurls', params: { imageurl: { url: valid_url } }
     end
     assert_redirected_to Imageurl.last
     assert_equal 'Image URL added successfully!', flash[:success]
@@ -26,14 +26,14 @@ class ImageurlsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'showing valid id succeeds' do
-    url = Imageurl.create!(url: 'http://host.com/image.jpg')
+    url = Imageurl.create!(url: valid_url)
     get imageurl_url(url)
     assert_response :success
     assert_template 'show'
   end
 
   test 'showing invalid id fails' do
-    post '/imageurls', params: { imageurl: { url: 'http://host.com/image.jpg' } }
+    post '/imageurls', params: { imageurl: { url: valid_url } }
     get format('/imageurls/%<id>i', id: Imageurl.last.id + 1)
     assert_response :not_found
     assert_template nil
@@ -55,8 +55,8 @@ class ImageurlsControllerTest < ActionDispatch::IntegrationTest
 
   test 'showing index succeeds and images are sorted' do
     # make sure there's something in the DB to index
-    Imageurl.create!(url: 'http://host.com/image.jpg', created_at: Time.current)
-    Imageurl.create!(url: 'http://host.com/image.jpg', created_at: Time.current + 5.minutes)
+    Imageurl.create!(url: valid_url, created_at: Time.current)
+    Imageurl.create!(url: valid_url, created_at: Time.current + 5.minutes)
     get '/imageurls/'
     assert_response :success
     assert_template 'index'
