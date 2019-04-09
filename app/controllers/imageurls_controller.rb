@@ -1,6 +1,7 @@
 class ImageurlsController < ApplicationController
   def show
     @imageurl = Imageurl.find(params[:id])
+    @sorted_tag_list = @imageurl.tag_list.to_a.sort
   rescue ActiveRecord::RecordNotFound
     head 404
   end
