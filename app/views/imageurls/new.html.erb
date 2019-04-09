@@ -7,6 +7,11 @@
     </p>
 
     <p>
+      <%= form.label :tag_list %>
+      <%= form.text_field :tag_list, value: @formatted_tag_list %>
+    </p>
+
+    <p>
       <%= form.submit %>
     </p>
 <% end %>

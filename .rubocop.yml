@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
     - 'db/schema.rb'
+    - 'db/migrate/*acts_as_taggable_on_engine.rb'
     - 'log/**/*'
     - 'tmp/**/*'
     - 'vendor/**/*'
