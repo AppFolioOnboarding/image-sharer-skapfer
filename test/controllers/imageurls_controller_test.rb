@@ -70,7 +70,7 @@ class ImageurlsControllerTest < ActionDispatch::IntegrationTest
     get '/imageurls/'
     assert_response :success
     assert_template 'index'
-    assert css_select('img.thumb').empty?
+    assert css_select('img.thumbnail').empty?
   end
 
   private
