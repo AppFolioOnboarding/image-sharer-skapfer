@@ -9,7 +9,7 @@ class ImageurlsController < ApplicationController
 
   def create
     @imageurl = Imageurl.new(imageurl_params)
-    if @imageurl.valid? && @imageurl.save
+    if @imageurl.save
       flash[:success] = 'Image URL added successfully!'
       redirect_to @imageurl
     else
