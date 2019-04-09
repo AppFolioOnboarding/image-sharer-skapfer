@@ -11,7 +11,7 @@ class ImageurlsControllerTest < ActionDispatch::IntegrationTest
 
   test 'creating a new URL works' do
     assert_difference('Imageurl.count') do
-      post '/imageurls', params: { imageurl: { url: valid_url } }
+      post '/imageurls', params: { imageurl: { url: valid_url, tag_list: '' } }
     end
     assert_redirected_to Imageurl.last
     assert_equal 'Image URL added successfully!', flash[:success]
@@ -33,14 +33,14 @@ class ImageurlsControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'showing invalid id fails' do
-    post '/imageurls', params: { imageurl: { url: valid_url } }
+    post '/imageurls', params: { imageurl: { url: valid_url, tag_list: '' } }
     get format('/imageurls/%<id>i', id: Imageurl.last.id + 1)
     assert_response :not_found
     assert_template nil
   end
 
   test 'creating an invalid URL fails' do
-    post '/imageurls', params: { imageurl: { url: 'foobar' } }
+    post '/imageurls', params: { imageurl: { url: 'foobar', tag_list: '' } }
     assert_response :unprocessable_entity
     assert_equal 'Url must begin with http:// or https://', flash[:danger]
     assert_template 'new'
