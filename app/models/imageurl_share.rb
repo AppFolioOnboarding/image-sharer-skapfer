@@ -6,10 +6,14 @@ class ImageurlShare
   validates :imageurl_id, presence: true
   validate :imageurl_id_valid
 
+  def imageurl
+    Imageurl.find(imageurl_id)
+  end
+
   private
 
   def imageurl_id_valid
-    Imageurl.find(imageurl_id)
+    imageurl
     true
   rescue ActiveRecord::RecordNotFound
     errors.add(:imageurl_id, 'invalid id')
