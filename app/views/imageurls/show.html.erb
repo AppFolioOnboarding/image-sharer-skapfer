@@ -14,3 +14,7 @@
   <strong>Image:</strong>
   <img src="<%= @imageurl.url %>" />
 </p>
+
+<p>
+  <%= link_to 'Share this image', imageurl_url(@imageurl) + '/share' %>
+</p>
