@@ -6,18 +6,16 @@ class ImageurlSharesController < ApplicationController
   end
 
   def create
-    @imageurl_share = ImageurlShare.new(imageurl_share_params)
-    if @imageurl_share.valid?
-      # FIXME: actually send
+    share = ImageurlShare.new(imageurl_share_params)
+    if share.valid?
+      ImageurlMailer.with(share: share).shareimage_email.deliver_now
       flash[:success] = 'email sent successfully'
       redirect_to imageurls_path
     else
-      flash[:danger] = @imageurl_share.errors.full_messages.join('; ')
+      flash[:danger] = share.errors.full_messages.join('; ')
       setup_form
       render 'new', status: :unprocessable_entity
     end
-  rescue ActiveRecord::RecordNotFound
-    head :unprocessable_entity
   end
 
   private
