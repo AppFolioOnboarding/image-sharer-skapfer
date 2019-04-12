@@ -1,6 +1,7 @@
 AllCops:
   Exclude:
     - 'config/environments/production.rb'
+    - 'config/initializers/simple_form.rb'
     - 'db/schema.rb'
     - 'db/migrate/*acts_as_taggable_on_engine.rb'
     - 'log/**/*'
