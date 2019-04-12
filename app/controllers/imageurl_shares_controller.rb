@@ -21,7 +21,7 @@ class ImageurlSharesController < ApplicationController
   private
 
   def imageurl_share_params
-    params.permit(:imageurl_id,:to, :from, :message)
+    params.permit(:imageurl_id, :to, :from, :message)
   end
 
   def setup_form
