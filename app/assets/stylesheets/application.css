@@ -19,3 +19,21 @@
   max-height: 400px;
   margin: 5px;
 }
+
+/* simple form error messages */
+.error {
+  color: #dc3545;
+}
+
+/* simple form form fields */
+label[for^="imageurl_share_"] {
+  width: 5em;
+}
+
+input[name^="imageurl_share"] {
+  width: 20em;
+}
+
+textarea[name^="imageurl_share"] {
+  width: 20em;
+}

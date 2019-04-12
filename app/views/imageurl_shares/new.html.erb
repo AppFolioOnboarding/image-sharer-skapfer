@@ -2,28 +2,16 @@
 
 <p>
   <strong>You are about to share this image:</strong>
-  <%= image_tag(@imageurl.url, class: 'thumbnail') %>
+  <%= image_tag(@imageurl_share.imageurl.url, class: 'thumbnail') %>
 </p>
 
-<%= form_with with: @imageurl_share, url: imageurl_path(@imageurl) + '/share', local: true do |form| %>
-  <p>
-    <%= form.label :from %>
-    <%= form.text_field :from, value: @from %>
-  </p>
+<%= simple_form_for @imageurl_share, url: '' do |f| %>
+  <%= f.input :imageurl_id, as: :hidden %>
+  <%= f.input :to %>
+  <%= f.input :from  %>
+  <%= f.input :message, as: :text %>
+  <%= f.submit 'Share image' %>
 
-  <p>
-    <%= form.label :to %>
-    <%= form.text_field :to, value: @to %>
-  </p>
-
-  <p>
-    <%= form.label :message %>
-    <%= form.text_field :message, value: @message %>
-  </p>
-
-  <p>
-    <%= form.submit name: 'share' %>
-  </p>
 <% end %>
 
-<%= link_to 'Do not share, go back to image', imageurl_url(@imageurl) %>
+<%= link_to 'Do not share, go back to image', imageurl_url(@imageurl_share.imageurl) %>
