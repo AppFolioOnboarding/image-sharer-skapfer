@@ -17,13 +17,13 @@ class ImageurlShareTest < ActiveSupport::TestCase
   test 'URL share with invalid to email is invalid' do
     share = ImageurlShare.new(to: @invalid_email, from: @valid_email, imageurl_id: @valid_id)
     assert_not share.valid?
-    assert_includes share.errors[:to], 'is invalid'
+    assert_includes share.errors[:to], 'recipient email address is invalid'
   end
 
   test 'URL share with invalid from email is invalid' do
     share = ImageurlShare.new(to: @valid_email, from: @invalid_email, imageurl_id: @valid_id)
     assert_not share.valid?
-    assert_includes share.errors[:from], 'is invalid'
+    assert_includes share.errors[:from], 'sender email address is invalid'
   end
 
   test 'valid URL share is valid' do
