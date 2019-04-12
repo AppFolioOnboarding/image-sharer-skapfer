@@ -14,9 +14,7 @@ class ImageurlShare
 
   def imageurl_id_valid
     imageurl
-    true
   rescue ActiveRecord::RecordNotFound
     errors.add(:imageurl_id, 'invalid id')
-    false
   end
 end
