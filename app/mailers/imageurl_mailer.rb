@@ -3,6 +3,9 @@ class ImageurlMailer < ApplicationMailer
 
   def shareimage_email
     @share = params[:share]
-    mail to: @share.to, from: @share.from
+    mail to: @share.to, from: @share.from do |format|
+      format.text
+      format.html
+    end
   end
 end

@@ -1,0 +1,14 @@
+<p>
+  Somebody shared an image with you.
+  The message is included below. Have a great day!
+</p>
+
+<p>
+  From: <%= @share.from %>
+  Message <%= @share.message %>
+</p>
+
+<p>
+  Image: <%= image_tag(@share.imageurl.url, class: 'thumbnail') %>
+  <%= @share.imageurl.url %>
+</p>
