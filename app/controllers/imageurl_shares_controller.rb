@@ -3,19 +3,33 @@ class ImageurlSharesController < ApplicationController
     params = self.params.permit(:imageurl_id, :to, :from, :message)
     @imageurl_share = ImageurlShare.new(params)
     @imageurl_share.message ||= 'Enter a friendly message here...'
-  rescue ActiveRecord::RecordNotFound
-    head :not_found
+
+    head :not_found unless @imageurl_share.valid_imageurl_id?
   end
 
   def create
     params = self.params.permit(imageurl_share: %i[imageurl_id to from message])
     @imageurl_share = ImageurlShare.new(params[:imageurl_share])
-    if @imageurl_share.valid?
-      ImageurlMailer.with(share: @imageurl_share).shareimage_email.deliver_now
-      flash[:success] = 'email sent successfully'
-      redirect_to imageurls_path
-    else
-      render 'new', status: :unprocessable_entity
+
+    unless @imageurl_share.valid_imageurl_id?
+      head :not_found
+      return
     end
+
+    unless ENV['SENDGRID_PASSWORD']
+      head :service_unavailable
+      return
+    end
+
+    unless @imageurl_share.valid?
+      flash[:danger] = @imageurl_share.errors.full_messages.join(' ')
+      render 'new', status: :unprocessable_entity
+      return
+    end
+
+    # TODO: deliver later
+    ImageurlMailer.with(share: @imageurl_share).shareimage_email.deliver_now
+    flash[:success] = 'email sent successfully'
+    redirect_to imageurls_path
   end
 end
