@@ -27,8 +27,7 @@ class ImageurlSharesController < ApplicationController
       return
     end
 
-    # TODO: deliver later
-    ImageurlMailer.with(share: @imageurl_share).shareimage_email.deliver_now
+    ImageurlMailer.with(@imageurl_share.to_hash).shareimage_email.deliver_later
     flash[:success] = 'email sent successfully'
     redirect_to imageurls_path
   end

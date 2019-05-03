@@ -20,6 +20,10 @@ class ImageurlShare
     Imageurl.where(id: imageurl_id).exists?
   end
 
+  def to_hash
+    { to: to, from: from, message: message, imageurl_id: imageurl_id }
+  end
+
   private
 
   def imageurl_id_valid
