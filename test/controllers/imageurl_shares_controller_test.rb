@@ -7,6 +7,8 @@ class ImageurlSharesControllerTest < ActionDispatch::IntegrationTest
     ENV['SENDGRID_PASSWORD'] = 'password'
   end
 
+  include ActionMailer::TestHelper
+
   test 'new share' do
     get @sharing_path
     assert_response :success
@@ -19,15 +21,37 @@ class ImageurlSharesControllerTest < ActionDispatch::IntegrationTest
   end
 
   test 'sharing' do
-    post @sharing_path, params: {
-      imageurl_share: {
-        imageurl_id: @imageurl.id,
-        to: 'foo@bar.com', from: 'foo@bar.com',
-        message: 'blah'
+    assert_enqueued_emails 1 do
+      post @sharing_path, params: {
+        imageurl_share: {
+          imageurl_id: @imageurl.id,
+          to: 'foo@bar.com', from: 'foo2@bar.com',
+          message: 'blah'
+        }
       }
-    }
+    end
+
     assert_redirected_to imageurls_path
     assert_equal 'email sent successfully', flash[:success]
+  end
+
+  test 'sharing: correct contents' do
+    perform_enqueued_jobs do
+      post @sharing_path, params: {
+        imageurl_share: {
+          imageurl_id: @imageurl.id,
+          to: 'foo@bar.com', from: 'foo2@bar.com',
+          message: 'blah'
+        }
+      }
+
+      assert_equal 1, ActionMailer::Base.deliveries.size
+      email = ActionMailer::Base.deliveries.last
+      assert_equal ['foo@bar.com'], email.to
+      assert_equal ['foo2@bar.com'], email.from
+      assert_match 'blah', email.text_part.to_s
+      assert_match @imageurl.url, email.text_part.to_s
+    end
   end
 
   test 'sharing: returns to form on error' do
