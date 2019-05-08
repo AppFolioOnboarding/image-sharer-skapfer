@@ -1,0 +1,17 @@
+<h1>Sharing an image</h1>
+
+<p>
+  <strong>You are about to share this image:</strong>
+  <%= image_tag(@imageurl_share.imageurl.url, class: 'thumbnail') %>
+</p>
+
+<%= simple_form_for @imageurl_share, url: '' do |f| %>
+  <%= f.input :imageurl_id, as: :hidden %>
+  <%= f.input :to %>
+  <%= f.input :from  %>
+  <%= f.input :message, as: :text %>
+  <%= f.submit 'Share image' %>
+
+<% end %>
+
+<%= link_to 'Do not share, go back to image', imageurl_url(@imageurl_share.imageurl) %>

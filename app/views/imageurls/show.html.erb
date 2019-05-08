@@ -14,3 +14,14 @@
   <strong>Image:</strong>
   <img src="<%= @imageurl.url %>" />
 </p>
+
+<% if ENV['SENDGRID_PASSWORD'] %>
+  <p>
+    <%=link_to 'Share this image', imageurl_url(@imageurl) + '/share' %>
+  </p>
+<% else %>
+  <p>
+    <strong>Sharing images is disabled; ask your administrator to
+    provision the SendGrid add-on to the image sharer app.</strong>
+  </p>
+<% end %>
